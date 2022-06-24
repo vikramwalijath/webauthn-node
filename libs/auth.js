@@ -226,7 +226,7 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
         excludeCredentials.push({
           id: cred.credId,
           type: 'public-key',
-          transports: ['nfc'],
+          transports: ['internal'],
         });
       }
     }
@@ -401,7 +401,7 @@ router.post('/signinRequest', csrfCheck, async (req, res) => {
         allowCredentials.push({
           id: cred.credId,
           type: 'public-key',
-          transports: ['nfc']
+          transports: ['internal']
         });
       }
     }
