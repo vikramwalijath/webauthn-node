@@ -42,7 +42,7 @@ app.use(session({
 
 app.use((req, res, next) => {
   if (process.env.PROJECT_DOMAIN) {
-    process.env.HOSTNAME = `${process.env.PROJECT_DOMAIN}.glitch.me`;
+    process.env.HOSTNAME = `vviws-webauthn-node.herokuapp.com`;
   } else {
     process.env.HOSTNAME = req.headers.host;
   }
@@ -121,7 +121,7 @@ app.get('/.well-known/assetlinks.json', (req, res) => {
 app.use('/auth', auth);
 
 // listen for req :)
-const port = process.env.GLITCH_DEBUGGER ? null : 3000;
-const listener = app.listen(port || process.env.PORT, () => {
-  console.log('Your app is listening on port ' + listener.address().port);
+const port = process.env.PORT || 3000;
+const listener = app.listen(port, () => {
+  console.log('Your app is listening on port-' +port);
 });
