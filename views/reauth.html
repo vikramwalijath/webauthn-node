@@ -26,6 +26,16 @@
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@7.0.0/dist/material-components-web.min.css">
     <script src="https://cdn.jsdelivr.net/gh/herrjemand/Base64URL-ArrayBuffer@latest/lib/base64url-arraybuffer.js"></script>
     <script src="components-bundle.js"></script>
+    <style>
+      .btn{
+        background: green;
+        border: 1px solid blue;
+        color: white;
+        height: 30px;
+        font-weight: 700;
+        border-radius: 5px;
+      }
+    </style>
   </head>
   <body class="mdc-typography">
     <mwc-top-app-bar-fixed>
@@ -37,7 +47,7 @@
           Verify your identity
         </h2>
         <div>
-          <mwc-button id="reauth" raised>Authenticate</mwc-button>
+         Already Registerd? <button id="reauth" class="btn" raised>Authenticate</button>
         </div>
         <div>
           <mwc-button id="cancel">Sign-in with password</mwc-button>
