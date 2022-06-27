@@ -225,6 +225,7 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
   try {
     const excludeCredentials = [];
     const trans = isMobile?'internal':'nfc'
+    console.log(trans);
     if (user.credentials.length > 0) {
       for (let cred of user.credentials) {
         excludeCredentials.push({
@@ -234,6 +235,7 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
         });
       }
     }
+
     const pubKeyCredParams = [];
     // const params = [-7, -35, -36, -257, -258, -259, -37, -38, -39, -8];
     const params = [-7, -257];
@@ -242,7 +244,7 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
     }
     const as = {}; // authenticatorSelection
     // const aa = req.body.authenticatorSelection.authenticatorAttachment;
-    const aa = (isMobile == "Mobile"?"platform" : "cross-platform")
+    const aa = (isMobile ?"platform" : "cross-platform")
     const rr = req.body.authenticatorSelection.requireResidentKey;
     const uv = req.body.authenticatorSelection.userVerification;
     const cp = req.body.attestation; // attestationConveyancePreference
