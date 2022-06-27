@@ -21,7 +21,7 @@ const fido2 = require('@simplewebauthn/server');
 const base64url = require('base64url');
 const fs = require('fs');
 const low = require('lowdb');
-import { isMobile } from "react-device-detect";
+
 if (!fs.existsSync('./.data')) {
   fs.mkdirSync('./.data');
 }
@@ -29,7 +29,8 @@ if (!fs.existsSync('./.data')) {
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('.data/db.json');
 const db = low(adapter);
-
+var device = require('express-device');
+router.use(device.capture());
 router.use(express.json());
 
 const RP_NAME = 'WebAuthn Codelab';
@@ -78,7 +79,7 @@ const getOrigin = (userAgent) => {
  * Set a `username` in the session.
  **/
 router.post('/username', (req, res) => {
-  console.log(isMobile)
+  console.log(req.device.type.toUpperCase())
   const username = req.body.username;
   // Only check username, no need to check password as this is a mock
   if (!username || !/[a-zA-Z0-9-_]+/.test(username)) {
@@ -218,16 +219,18 @@ router.get('/resetDB', (req, res) => {
  * }```
  **/
 router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
+ let isMobile =  req.device.type.toUpperCase()=='DESKTOP'?false:true;
   const username = req.session.username;
   const user = db.get('users').find({ username: username }).value();
   try {
     const excludeCredentials = [];
+    const trans = isMobile?'internal':'nfc'
     if (user.credentials.length > 0) {
       for (let cred of user.credentials) {
         excludeCredentials.push({
           id: cred.credId,
           type: 'public-key',
-          transports: ['internal'],
+          transports: [trans],
         });
       }
     }
