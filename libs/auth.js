@@ -79,7 +79,7 @@ const getOrigin = (userAgent) => {
  * Set a `username` in the session.
  **/
 router.post('/username', (req, res) => {
-  console.log(req.device.type.toUpperCase())
+  console.log('Userdevice-',req.device.type.toUpperCase())
   const username = req.body.username;
   // Only check username, no need to check password as this is a mock
   if (!username || !/[a-zA-Z0-9-_]+/.test(username)) {
