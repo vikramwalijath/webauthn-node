@@ -21,7 +21,7 @@ const fido2 = require('@simplewebauthn/server');
 const base64url = require('base64url');
 const fs = require('fs');
 const low = require('lowdb');
-
+import { isMobile } from "react-device-detect";
 if (!fs.existsSync('./.data')) {
   fs.mkdirSync('./.data');
 }
@@ -78,6 +78,7 @@ const getOrigin = (userAgent) => {
  * Set a `username` in the session.
  **/
 router.post('/username', (req, res) => {
+  console.log(isMobile)
   const username = req.body.username;
   // Only check username, no need to check password as this is a mock
   if (!username || !/[a-zA-Z0-9-_]+/.test(username)) {
@@ -237,7 +238,8 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
       pubKeyCredParams.push({ type: 'public-key', alg: param });
     }
     const as = {}; // authenticatorSelection
-    const aa = req.body.authenticatorSelection.authenticatorAttachment;
+    // const aa = req.body.authenticatorSelection.authenticatorAttachment;
+    const aa = (isMobile == "Mobile"?"platform" : "cross-platform")
     const rr = req.body.authenticatorSelection.requireResidentKey;
     const uv = req.body.authenticatorSelection.userVerification;
     const cp = req.body.attestation; // attestationConveyancePreference
@@ -392,7 +394,7 @@ router.post('/signinRequest', csrfCheck, async (req, res) => {
 
     const credId = req.query.credId;
 
-    const userVerification = req.body.userVerification || 'required';
+    const userVerification = req.body.userVerification || 'preferred';
 
     const allowCredentials = [];
     for (let cred of user.credentials) {
