@@ -226,7 +226,7 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
         excludeCredentials.push({
           id: cred.credId,
           type: 'public-key',
-          transports: ['internal'],
+          transports: ['nfc'],
         });
       }
     }
@@ -273,7 +273,7 @@ router.post('/registerRequest', csrfCheck, sessionCheck, async (req, res) => {
       // Prompt users for additional information about the authenticator.
       attestationType: attestation,
       // Prevent users from re-registering existing authenticators
-      excludeCredentials,
+      //excludeCredentials,
       authenticatorSelection,
     });
     console.log('challenge')
@@ -392,7 +392,7 @@ router.post('/signinRequest', csrfCheck, async (req, res) => {
 
     const credId = req.query.credId;
 
-    const userVerification = req.body.userVerification || 'required';
+    const userVerification = req.body.userVerification || 'preferred';
 
     const allowCredentials = [];
     for (let cred of user.credentials) {
@@ -401,7 +401,7 @@ router.post('/signinRequest', csrfCheck, async (req, res) => {
         allowCredentials.push({
           id: cred.credId,
           type: 'public-key',
-          transports: ['internal']
+         // transports: ['internal']
         });
       }
     }
