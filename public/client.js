@@ -43,7 +43,7 @@ export const registerCredential = async () => {
     attestation: 'none',
     authenticatorSelection: {
       authenticatorAttachment: 'platform',
-      userVerification: 'required',
+      userVerification: 'preferred',
       requireResidentKey: false
     }
   };
