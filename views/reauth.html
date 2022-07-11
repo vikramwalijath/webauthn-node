@@ -112,7 +112,7 @@
       button.addEventListener('click', e => {
         authenticate().then(user => {
           if (user) {
-            //location.href = '/home';
+            location.href = '/home';
           } else {
             throw 'User not found.';
           }
